@@ -59,9 +59,6 @@
       firebase.initializeApp(firebaseConfig);
       const provider = new firebase.auth.FacebookAuthProvider();
       provider.addScope("email");
-      provider.setCustomParameters({
-        display: "pupup",
-      });
       function login() {
         firebase
           .auth()
