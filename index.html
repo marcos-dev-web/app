@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login with facebook</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: all 150ms linear;
+      }
+
+      html,
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: sans-serif;
+        background: #222222;
+      }
+
+      .login {
+        border-radius: 4px;
+        background: rgb(59, 151, 16);
+        text-decoration: none;
+        padding: 14px 18px;
+        color: white;
+        font-weight: bold;
+        border: 0;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .login:hover {
+        background: rgb(39, 100, 10);
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="login()" class="login">Login with facebook</button>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-firestore.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBq_hFPEFQC8GreKZgQ7wiAU-Z-7sG21E4",
+        authDomain: "planeta-entregador-backend.firebaseapp.com",
+        projectId: "planeta-entregador-backend",
+        storageBucket: "planeta-entregador-backend.appspot.com",
+        messagingSenderId: "922163744465",
+        appId: "1:922163744465:web:faacf5c868c7e15bf53ff0",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const provider = new firebase.auth.FacebookAuthProvider();
+      provider.addScope("email");
+      provider.setCustomParameters({
+        display: "pupup",
+      });
+      function login() {
+        firebase
+          .auth()
+          .signInWithPopup(provider)
+          .then((res) => {
+            const credential = res.credential;
+            const user = res.user;
+            const accessToken = res.accessToken;
+
+            console.log(credential);
+            console.log(user);
+            console.log(accessToken);
+          })
+          .catch((err) => {
+            const errorCode = err.code;
+            const errorMessage = err.message;
+            const email = err.email;
+            const credential = err.credential;
+            console.log(errorCode);
+            console.log(errorMessage);
+            console.log(email);
+            console.log(credential);
+          });
+      }
+    </script>
+  </body>
+</html>
